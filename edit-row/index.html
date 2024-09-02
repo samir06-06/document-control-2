@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Appointment</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.01.min.css"
+    />
+    <link rel="stylesheet" href="../css/edit.min.css" />
+  </head>
+  <body>
+    <nav class="navbar-light bg-light">
+      <section class="navigation">
+        <div class="container flex-row">
+          <div class="brand">
+            <a href="#!" class="logo" style="text-decoration: none;">
+              <img src="logo1_edited.png" alt="" />
+              Document Control
+            </a>
+          </div>
+          <nav>
+            <ul class="nav-list">
+              <li>
+                <a href="/" style="text-decoration: none;"
+                  ><i class="fa-solid fa-house"></i>&nbsp;&nbsp;Home</a
+                >
+              </li>
+              <li>
+                <a href="/history" style="text-decoration: none;"
+                  ><i class="fa-solid fa-clock-rotate-left"></i
+                  >&nbsp;&nbsp;Logs</a
+                >
+              </li>
+              <li>
+                <a href="/login" style="text-decoration: none;"
+                  ><i class="fa-solid fa-arrow-right-from-bracket"></i
+                  >&nbsp;&nbsp;LogOut</a
+                >
+              </li>
+            </ul>
+     
+        </div>
+      </section>
+    </nav>
+
+    <div class="edit-form-container">
+      <form id="appointment">
+        <!-- Add fields for each column from the main table -->
+        <label for="inputNo">No#:</label>
+        <input type="text" id="inputNo" readonly />
+        <br />
+  
+        <label for="inputRegDate">Registration (incoming) date:</label>
+        <input type="text" id="inputRegDate" required />
+        <br />
+  
+        <label for="inputRegNum">Registration (incoming) number:</label>
+        <input type="text" id="inputRegNum" required />
+        <br />
+  
+        <label for="inputSender">Sender:</label>
+        <input type="text" id="inputSender" required />
+        <br />
+  
+        <label for="inputDocType">Document type:</label>
+        <input type="text" id="inputDocType" required />
+        <br />
+  
+        <label for="inputDocNum">Document number:</label>
+        <input type="text" id="inputDocNum" required />
+        <br />
+  
+        <label for="inputPONum">PO number:</label>
+        <input type="text" id="inputPONum" required />
+        <br />
+  
+        <label for="inputDocDate">Document Date:</label>
+        <input type="text" id="inputDocDate" required />
+        <br />
+  
+        <label for="inputAddressee">Addressee:</label>
+        <input type="text" id="inputAddressee" required />
+        <br />
+  
+        <label for="inputAttachments">Attachments count / paper count:</label>
+        <input type="text" id="inputAttachments" required />
+        <br />
+  
+        <label for="inputDeliveryType">Delivery type:</label>
+        <input type="text" id="inputDeliveryType" required />
+        <br />
+  
+        <label for="inputDistributedTo">Distributed to:</label>
+        <input type="text" id="inputDistributedTo" required />
+        <br />
+  
+        <label for="inputEmailScan">Hard copy's scan is sent by email:</label>
+        <input type="text" id="inputEmailScan" required />
+        <br />
+  
+        <label for="inputComments">Comments:</label>
+        <input type="text" id="inputComments" required />
+        <br />
+  
+        <label for="inputIssuedBy">Issued by:</label>
+        <input type="text" id="inputIssuedBy" required />
+        <br />
+  
+        <label for="inputEnvelopeNum">Envelope number:</label>
+        <input type="text" id="inputEnvelopeNum" required />
+        <br />
+  
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/js/autoComplete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.5.3/js/dataTables.dateTime.min.js"></script>
+    <script>
+      // Initialize date and time pickers
+      new DateTime("#inputRegDate", { format: "MMMM Do YYYY" })
+      new DateTime("#inputDocDate", { format: "MMMM Do YYYY" })
+
+      function populateFormFields() {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    document.querySelector("#inputNo").value = urlParams.get("no") || "";
+    document.querySelector("#inputRegDate").value = urlParams.get("registrationDate") || "";
+    document.querySelector("#inputRegNum").value = urlParams.get("number") || "";
+    document.querySelector("#inputSender").value = urlParams.get("sender") || "";
+    document.querySelector("#inputDocType").value = urlParams.get("docType") || "";
+    document.querySelector("#inputDocNum").value = urlParams.get("docNumber") || "";
+    document.querySelector("#inputPONum").value = urlParams.get("poNumber") || "";
+    document.querySelector("#inputDocDate").value = urlParams.get("docDate") || "";
+    document.querySelector("#inputAddressee").value = urlParams.get("addressee") || "";
+    document.querySelector("#inputAttachments").value = urlParams.get("attachments") || "";
+    document.querySelector("#inputDeliveryType").value = urlParams.get("deliveryType") || "";
+    document.querySelector("#inputDistributedTo").value = urlParams.get("distributedTo") || "";
+    document.querySelector("#inputEmailScan").value = urlParams.get("emailScan") || "";
+    document.querySelector("#inputComments").value = urlParams.get("comments") || "";
+    document.querySelector("#inputIssuedBy").value = urlParams.get("issuedBy") || "";
+    document.querySelector("#inputEnvelopeNum").value = urlParams.get("envelopeNumber") || "";
+  }
+
+  // Call the function on page load
+  document.addEventListener("DOMContentLoaded", populateFormFields);
+      document
+        .querySelector("#appointment")
+        .addEventListener("submit", function (e) {
+          e.preventDefault()
+
+          const updatedData = {
+            no: document.querySelector("#inputNo").value,
+            registrationDate: document.querySelector("#inputRegDate").value,
+            number: document.querySelector("#inputRegNum").value,
+            sender: document.querySelector("#inputSender").value,
+            docType: document.querySelector("#inputDocType").value,
+            docNumber: document.querySelector("#inputDocNum").value,
+            poNumber: document.querySelector("#inputPONum").value,
+            docDate: document.querySelector("#inputDocDate").value,
+            addressee: document.querySelector("#inputAddressee").value,
+            attachments: document.querySelector("#inputAttachments").value,
+            deliveryType: document.querySelector("#inputDeliveryType").value,
+            distributedTo: document.querySelector("#inputDistributedTo").value,
+            emailScan: document.querySelector("#inputEmailScan").value,
+            comments: document.querySelector("#inputComments").value,
+            issuedBy: document.querySelector("#inputIssuedBy").value,
+            envelopeNum: document.querySelector("#inputEnvelopeNum").value,
+          }
+
+          alert(
+            "Saving changes for entry: " + JSON.stringify(updatedData, null, 2)
+          )
+          
+          // Logic to save changes back to the main table or database goes here
+        })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "devDependencies": {
+    "sass": "^1.77.8"
+  },
+  "scripts": {
+    "build-css": "sass --style=compressed scss/:css/",
+    "watch-css": "sass --watch --style=compressed scss/:css/"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.7",
+    "bootstrap": "^5.3.3",
+    "datatables.net": "^1.13.11",
+    "datatables.net-bs5": "^1.13.11",
+    "datatables.net-buttons": "^1.7.1",
+    "datatables.net-buttons-bs5": "^1.7.1",
+    "jquery": "^3.7.1",
+    "jszip": "^3.1.3"
+  }
+}

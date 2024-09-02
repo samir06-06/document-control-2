@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Table</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.1.4/css/dataTables.dataTables.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/buttons/3.1.1/css/buttons.dataTables.css"
+    />
+    <link rel="stylesheet" href="../css/main-style.min.css">
+    <script
+      src="https://kit.fontawesome.com/7d77bd7370.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <nav class="navbar-light bg-light">
+      <section class="navigation">
+        <div class="container flex-row">
+          <div class="brand">
+            <a href="#!" class="logo">
+              <img src="logo1_edited.png" alt="" />
+              Document Control
+            </a>
+          </div>
+          <nav>
+            <ul class="nav-list">
+              <li>
+                <a href="/"
+                  ><i class="fa-solid fa-house"></i>&nbsp;&nbsp;Home</a
+                >
+              </li>
+              <li>
+                <a href="/history"
+                  ><i class="fa-solid fa-clock-rotate-left"></i
+                  >&nbsp;&nbsp;Logs</a
+                >
+              </li>
+              <li>
+                <a href="/login"
+                  ><i class="fa-solid fa-arrow-right-from-bracket"></i
+                  >&nbsp;&nbsp;LogOut</a
+                >
+              </li>
+            </ul>
+     
+        </div>
+      </section>
+    </nav>
+
+    <div id="data-table" class="container">
+      <table id="example" class="table table-striped row-border">
+        <thead>
+          <tr class="columnsss">
+            <th>No#</th>
+            <th>Registration (incoming) date</th>
+            <th>Registration (incoming) number</th>
+            <th>Sender</th>
+            <th>Document type</th>
+            <th>Document number</th>
+            <th>PO number</th>
+            <th>Document Date</th>
+            <th>Addressee</th>
+            <th>Attachments count / paper count</th>
+            <th>Delivery type</th>
+            <th>Distributed to</th>
+            <th>Hard copy's scan is sent by email</th>
+            <th>Comments</th>
+            <th>Issued by</th>
+            <th>Envelope number</th>
+            <th>Actions</th>
+          </tr>
+          <tr id="searchInputs">
+            <th><input type="text" placeholder="Search No#" /></th>
+            <th><input type="date" id="registration-date-filter" /></th>
+            <th>
+              <input type="text" placeholder="Search Registration number" />
+            </th>
+            <th><input type="text" placeholder="Search Sender" /></th>
+            <th class="button-th">
+              <div
+                class="btn-group me-2"
+                role="group"
+                aria-label="Basic checkbox toggle button Second group"
+              >
+                <input
+                  type="checkbox"
+                  class="btn-check"
+                  id="btncheck1"
+                  autocomplete="off"
+                  data-filter="Type 1"
+                />
+                <label class="btn btn-outline-success" for="btncheck1"
+                  >Checkbox 1</label
+                >
+
+                <input
+                  type="checkbox"
+                  class="btn-check"
+                  id="btncheck2"
+                  autocomplete="off"
+                  data-filter="Type 2"
+                />
+                <label class="btn btn-outline-success" for="btncheck2"
+                  >Checkbox 2</label
+                >
+
+                <input
+                  type="checkbox"
+                  class="btn-check"
+                  id="btncheck3"
+                  autocomplete="off"
+                  data-filter="Type 3"
+                />
+                <label class="btn btn-outline-success" for="btncheck3"
+                  >Checkbox 3</label
+                >
+              </div>
+            </th>
+            <th><input type="text" placeholder="Search Document number" /></th>
+            <th><input type="text" placeholder="Search PO number" /></th>
+            <th>
+              <input
+                type="date"
+                id="document-date-filter"
+                placeholder="Search Document Date"
+              />
+            </th>
+            <th><input type="text" placeholder="Search Addressee" /></th>
+            <th>
+              <input
+                type="text"
+                placeholder="Search Attachments count / paper count"
+              />
+            </th>
+            <th><input type="text" placeholder="Search Delivery type" /></th>
+            <th><input type="text" placeholder="Search Distributed to" /></th>
+            <th>
+              <input
+                type="text"
+                placeholder="Search Hard copy's scan is sent by email"
+              />
+            </th>
+            <th><input type="text" placeholder="Search Comments" /></th>
+            <th><input type="text" placeholder="Search Issued by" /></th>
+            <th><input type="text" placeholder="Search Envelope number" /></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <!-- DataTables Bootstrap 5 Integration JS -->
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <!-- DataTables Buttons JS -->
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        const generateSampleData = () => {
+          const data = []
+          for (let i = 1; i <= 70; i++) {
+            data.push({
+              no: i,
+              registrationDate: `2024/07/${i.toString().padStart(2, "0")}`,
+              number: `SP/23-DS-${i.toString().padStart(4, "0")}/T1`,
+              sender: `Sender ${i}`,
+              docType: `Type ${(i % 3) + 1}<br />Type ${
+                ((i + 1) % 3) + 1
+              }<br />Type ${((i + 2) % 3) + 1}`,
+              docNumber: `DOC/${i.toString().padStart(5, "0")}<br />DOC/${
+                i.toString().padStart(5, "0") + 1
+              }`,
+              poNumber: `PO${i.toString().padStart(4, "0")}`,
+              docDate: `2024/0${(i % 3) + 1}/0${(i % 3) + 1}<br />2024/0${
+                ((i + 1) % 3) + 1
+              }/0${((i + 1) % 3) + 1}`,
+              addressee: `Addressee ${i}`,
+              attachments: `${i} pages`,
+              deliveryType: `Type ${(i % 2) + 1}`,
+              distributedTo: `Distributed ${i}`,
+              emailScan: `Email ${(i % 2) + 1}`,
+              comments: `Comment ${i}`,
+              issuedBy: `Issuer ${i}`,
+              envelopeNumber: `${i + 1000}`,
+            })
+          }
+          return data
+        }
+
+        const sampleData = generateSampleData()
+
+        const $tbody = $("#table-body")
+        sampleData.forEach((row) => {
+          $tbody.append(`
+                <tr>
+                    <td>${row.no}</td>
+                    <td>${row.registrationDate}</td>
+                    <td>${row.number}</td>
+                    <td>${row.sender}</td>
+                    <td>${row.docType}</td>
+                    <td>${row.docNumber}</td>
+                    <td>${row.poNumber}</td>
+                    <td>${row.docDate}</td>
+                    <td>${row.addressee}</td>
+                    <td>${row.attachments}</td>
+                    <td>${row.deliveryType}</td>
+                    <td>${row.distributedTo}</td>
+                    <td>${row.emailScan}</td>
+                    <td>${row.comments}</td>
+                    <td>${row.issuedBy}</td>
+                    <td>${row.envelopeNumber}</td>
+                    <td>
+                        <button class="edit" onclick="startEditing(${
+                          row.no - 1
+                        })"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button class="download" onclick="handleDownload(${
+                          row.no - 1
+                        })"><i class="fas fa-download"></i></button>
+                        <button class="upload">
+                            <input type="file" style="display: none;" onchange="handleFileUpload(${
+                              row.no - 1
+                            }, event)" id="upload-${row.no - 1}" />
+                            <label for="upload-${
+                              row.no - 1
+                            }"><i class="fas fa-upload"></i></label>
+                        </button>
+                        <button class="delete" onclick="handleDelete(${
+                          row.no - 1
+                        })"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `)
+        })
+
+        const table = $("#example").DataTable({
+          columnDefs: [{ targets: "_all", orderable: false }],
+          scrollX: true,
+          paging: true,
+          lengthChange: true,
+          lengthMenu: [10, 25, 50, 75, 100],
+          pageLength: 10,
+          searching: true,
+          info: true,
+          language: {
+            paginate: {
+              previous: "Previous",
+              next: "Next",
+            },
+          },
+          layout: {
+            bottomEnd: {
+              paging: {
+                firstLast: false,
+              },
+            },
+          },
+          dom: "Bfrtip",
+          buttons: ["pageLength", "copy", "csv", "excel", "pdf", "print"],
+        })
+
+        $("#searchInputs input").on("keyup change", function () {
+          const index = $(this).parent().index()
+          table.column(index).search(this.value).draw()
+        })
+
+        $("#registration-date-filter").on("change", function () {
+          const date = $(this).val().replace(/-/g, "/")
+          table.column(1).search(date).draw()
+        })
+
+        $("#document-date-filter").on("change", function () {
+          const date = $(this).val().replace(/-/g, "/")
+          table.column(7).search(date).draw()
+        })
+      })
+
+      function startEditing(rowIndex) {
+        const row = document.querySelectorAll("#table-body tr")[rowIndex]
+        const rowData = Array.from(row.children).map(
+          (td) => td.innerText || td.innerHTML
+        )
+
+        // Navigate to edit-page.html with row data passed as URL parameters
+        const params = new URLSearchParams({
+          no: rowData[0],
+          registrationDate: rowData[1],
+          number: rowData[2],
+          sender: rowData[3],
+          docType: rowData[4],
+          docNumber: rowData[5],
+          poNumber: rowData[6],
+          docDate: rowData[7],
+          addressee: rowData[8],
+          attachments: rowData[9],
+          deliveryType: rowData[10],
+          distributedTo: rowData[11],
+          emailScan: rowData[12],
+          comments: rowData[13],
+          issuedBy: rowData[14],
+          envelopeNumber: rowData[15],
+        }).toString()
+
+        window.location.href = `/edit-row/index.html?${params}`
+      }
+
+      function handleFileUpload(rowIndex, event) {
+        const file = event.target.files[0]
+        if (file) {
+          const reader = new FileReader()
+          reader.onload = (e) => {
+            localStorage.setItem(`file-${rowIndex}`, e.target.result)
+            alert(
+              `File content stored in local storage for row ${rowIndex + 1}`
+            )
+          }
+          reader.readAsText(file)
+        }
+      }
+
+      function handleDelete(rowIndex) {
+        $(`#example tbody tr:eq(${rowIndex})`).remove()
+        alert(`Deleted row ${rowIndex + 1}`)
+      }
+      $(".btn-check").on("change", function () {
+        const checkedFilters = []
+
+        // Collect all checked filters
+        $(".btn-check:checked").each(function () {
+          checkedFilters.push($(this).data("filter"))
+        })
+
+        // If no checkboxes are checked, show all rows
+        if (checkedFilters.length === 0) {
+          table.column(4).search("").draw()
+          return
+        }
+
+        // Create a regex pattern to match the checked filters
+        const regexPattern = checkedFilters.join("|")
+
+        // Apply the filter to the 'Document type' column
+        table.column(4).search(regexPattern, true, false).draw()
+      })
+
+      function handleDownload(rowIndex) {
+        const row = document.querySelectorAll("#table-body tr")[rowIndex]
+        const data = Array.from(row.children)
+          .map((td) => td.innerText || td.innerHTML)
+          .join(",")
+        const blob = new Blob([data], { type: "text/csv;charset=utf-8;" })
+        const url = URL.createObjectURL(blob)
+        const link = document.createElement("a")
+        link.href = url
+        link.setAttribute("download", `row_${rowIndex + 1}.csv`)
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+      }
+    </script>
+  </body>
+</html>

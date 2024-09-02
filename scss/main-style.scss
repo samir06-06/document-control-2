@@ -1,0 +1,431 @@
+@import "./variables.scss";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~datatables.net-bs5/css/dataTables.bootstrap5.min.css";
+@import "https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css";
+@import "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css";
+
+input,
+textarea {
+  user-select: text;
+}
+
+.navbar-light {
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.btn-group {
+  margin-top: 10px;
+}
+.btn-group .btn {
+  margin-right: 5px;
+}
+.edit,
+.download,
+.upload,
+.delete {
+  margin: 0 2px;
+}
+.edit i,
+.download i,
+.upload i,
+.delete i {
+  font-size: 1.2rem;
+}
+
+$content-width: 1400px;
+$breakpoint: 799px;
+$nav-height: 70px;
+$nav-background: #fff;
+$nav-font-color: #0c0c0c;
+$link-hover-color: #f8b500;
+$first: #007bff; // Primary color for Bootstrap integration
+$second: #0056b3; // Darker shade of primary color
+
+@import "./variables.scss";
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+.navigation {
+  height: $nav-height;
+  background: linear-gradient(90deg, $first 0%, $second 75%);
+  position: relative;
+}
+.flatpickr-months {
+  display: none;
+}
+.brand {
+  .logo {
+    color: white;
+    font-weight: 500;
+    img {
+      width: 55px;
+    }
+  }
+  padding-left: 20px;
+  float: left;
+  line-height: $nav-height;
+  text-transform: uppercase;
+  font-size: 1.4em;
+
+  a,
+  a:visited {
+    color: green;
+    text-decoration: none;
+  }
+}
+
+nav {
+  float: right;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+
+    li {
+      position: relative;
+      i {
+        font-size: 20px;
+        &:hover {
+          color: $third;
+        }
+      }
+
+      a {
+        display: block;
+        padding: 0 20px;
+        line-height: $nav-height;
+        color: $nav-background;
+        text-decoration: none;
+        position: relative;
+        transition: all 300ms ease;
+        &:hover {
+          color: $third;
+        }
+
+        &::before {
+          z-index: 1;
+          content: "";
+          position: absolute;
+          bottom: 10px;
+          left: 18px;
+          height: 5px;
+          width: 0;
+          background-color: $link-hover-color;
+          transition: width 300ms ease;
+        }
+
+        &:hover::before {
+          width: 70%;
+        }
+
+        &:not(:only-child)::after {
+          content: " ▾";
+          padding-left: 4px;
+        }
+      }
+
+      ul {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+        min-width: 190px;
+
+        li {
+          a {
+            padding: 15px;
+            line-height: 20px;
+          }
+        }
+      }
+
+      &:hover ul {
+        display: block;
+      }
+    }
+  }
+}
+
+.nav-mobile {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: $nav-background;
+  height: $nav-height;
+  width: $nav-height;
+
+  #nav-toggle {
+    position: absolute;
+    left: 18px;
+    top: 22px;
+    cursor: pointer;
+    padding: 10px 35px 16px 0;
+
+    span,
+    span::before,
+    span::after {
+      cursor: pointer;
+      border-radius: 1px;
+      height: 5px;
+      width: 35px;
+      background: $link-hover-color;
+      position: absolute;
+      display: block;
+      content: "";
+      transition: all 300ms ease-in-out;
+    }
+
+    span::before {
+      top: -10px;
+    }
+
+    span::after {
+      bottom: -10px;
+    }
+
+    &.active {
+      span {
+        background-color: transparent;
+        &::before {
+          transform: rotate(45deg);
+          top: 0;
+        }
+        &::after {
+          transform: rotate(-45deg);
+          bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+body {
+  // text-align: center;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.navbar {
+  width: 100%;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+}
+
+#data-table {
+  .dataTables_filter {
+    input {
+      padding: 5px;
+    }
+  }
+  .edit,
+  .download,
+  .upload,
+  .delete {
+    padding: 3px 7px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 0 2px;
+    background: none;
+    color: white;
+  }
+
+  .delete {
+    background-color: red;
+  }
+  .edit {
+    background-color: green;
+  }
+  .upload {
+    background-color: blue;
+  }
+  .download {
+    background-color: rgb(255, 230, 0);
+  }
+
+  .button-th {
+    margin: auto;
+
+    input {
+      display: none;
+    }
+
+    button {
+      border: 1px solid black;
+      &:hover,
+      &.clicked {
+        background-color: $second;
+      }
+      &:nth-child(3) {
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+    }
+  }
+
+  .d-md-flex {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: end !important;
+    justify-content: center !important;
+  }
+
+  .form-control-sm {
+    border: 1px solid grey;
+    margin: 0 5px 5px 0;
+    box-shadow: 0 0 0 3px #304d309e;
+    &:focus {
+      outline: none;
+      &:hover {
+        border-color: $second;
+      }
+    }
+  }
+
+  .dt-search label {
+    margin-right: 5px;
+  }
+  .pagination {
+    margin-bottom: 20px;
+
+    .page-link {
+      color: $first;
+      border: 1px solid $first; // Primary color border
+      &:hover {
+        background-color: darken($first, 10%);
+        border-color: darken($first, 10%);
+      }
+      &[aria-current="page"] {
+        background-color: $first; // Active page color
+        border-color: $first;
+        color: white;
+        outline: none;
+      }
+    }
+  }
+
+  .dt-buttons {
+    margin-top: 30px;
+    .btn-secondary {
+      background-color: $first;
+      &:hover {
+        background-color: darken($first, 10%);
+      }
+    }
+  }
+
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid black;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f2f2f2; // Alternating row colors
+    }
+    tbody tr:hover {
+      background-color: #e2e2e2; // Hover effect
+    }
+
+    th {
+      background-color: $first !important;
+      color: white;
+      font-weight: bold;
+      cursor: default;
+      .dt-column-order::before {
+        display: none;
+      }
+      // &.sorting,
+      // &.sorting_asc,
+      // &.sorting_desc {
+      //   background: none !important;
+      // }
+      .dt-ordering-asc {
+        border: none;
+      }
+    }
+
+    tfoot {
+      background-color: #f4f4f4;
+      th {
+        font-weight: bold;
+        border: none;
+      }
+      .columnsss {
+        background-color: white !important;
+        color: black;
+      }
+    }
+  }
+
+  thead input {
+    font-size: 12px;
+    font-weight: 500;
+    min-width: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    margin: 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .dataTables_wrapper {
+    width: 100%;
+
+    .dataTables_info,
+    .dataTables_paginate,
+    .dataTables_filter {
+      padding: 8px;
+    }
+
+    .dataTables_paginate {
+      margin: 0;
+    }
+    .dataTables_filter {
+      text-align: right;
+    }
+    .dataTables_length {
+      float: left;
+    }
+    .dataTables_info {
+      clear: both;
+      padding: 8px 0;
+    }
+  }
+
+  // #example th:nth-child(1).sorting,
+  // #example th:nth-child(1).sorting_asc,
+  // #example th:nth-child(1).sorting_desc {
+  //   background: none !important;
+  // }
+}
+
+#example {
+  .paging_simple_numbers {
+    ul {
+      list-style: none;
+      li {
+        list-style: none;
+      }
+    }
+  }
+}
